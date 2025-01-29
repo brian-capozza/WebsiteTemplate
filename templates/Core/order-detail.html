@@ -1,0 +1,75 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+<main id="order-detail">
+
+    <div class="invoice-header">
+        <h1>{{ o.order_number }}</h1>
+    </div>
+    <div class="invoice-details">
+        <table>
+            <tr>
+                <td><p><strong>Order Date:</strong> {{ o.order_date }}</p></td>
+                <td><p><strong>Order Status:</strong> {{ o.order_status }}</p></td>
+            </tr>
+            <tr>
+                {% for a in o_address %}
+                <td><p><strong>Ship To Address:</strong> {{ a.address_city }}</p></td>
+                {% endfor %}
+                {% if o.tracking_number == "" %}
+                <td><p><strong>USPS Tracking Number:</strong> No Tracking Provided</p></td>
+                {% else %}
+                <td><p><strong>USPS Tracking Number:</strong> {{ o.tracking_number }}</p></td>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+    <div class="small-container cart-page">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for item in o_items %}
+            <tr>
+                <td>
+                    {{ item.title }}
+                </td>
+                <td>
+                    <img src="{{ item.image.url }}" alt="" loading="lazy" decoding="async">
+                </td>
+                <td>
+                    ${{ item.price }}
+                </td>
+                <td>
+                    {{ item.quantity }}
+                </td>
+                <td>
+                    {{ item.total_price }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="total-price">
+            <table>
+                <tr>
+                    <td>Total</td>
+                    <td>${{ o.order_price }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</main>
+
+
+{% endblock content %}

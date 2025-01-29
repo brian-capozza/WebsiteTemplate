@@ -1,0 +1,15 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="help-main">
+    <div class="help-header">
+        <h1>Return Policy</h1>
+    </div>
+    <div class="help-details">
+        {{ return_policy_text.return_policy_text|safe }}
+    </div>
+</main>
+
+{% endblock content %}

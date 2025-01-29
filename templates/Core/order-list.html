@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <div class="form-wrapper">
+        <form id="OrderForm" method="get" target="">
+            <input type="text" id="order_input" placeholder="{{ input_text }}">
+            <button type="submit">Find</button>
+        </form>
+    </div>
+</div>
+
+
+
+<style>
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh; /* Make container take up the full viewport height */
+}
+
+.form-wrapper {
+    text-align: center;
+}
+
+#OrderForm input[type="text"] {
+    display: block; /* Ensure input field is displayed as block */
+    width: 400px; /* Set width of input field */
+    margin: 0 auto; /* Center the input field horizontally */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#OrderForm input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+#OrderForm button[type="submit"] {
+    display: block; /* Ensure button is displayed as block */
+    width: 100px; /* Set width of button to adjust to content */
+    margin: 0 auto; /* Center the button horizontally */
+    padding: 10px 20px; /* Add padding to button */
+    background: #E3E6FE;
+    border: #E3E6FE;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#OrderForm button:hover {
+    color: #263dc9;
+}
+</style>
+
+<script>
+    document.getElementById('OrderForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        var oid = document.getElementById('order_input').value.trim(); // Get the value from the input field and trim any extra spaces
+        
+        if (oid) { // Check if oid is not empty
+            this.action = "/orders/" + oid; // Set the action attribute of the form
+            this.submit(); // Submit the form
+        } else {
+            alert("Please enter a valid OID."); // Notify the user if the OID is empty
+        }
+    });
+</script>
+
+{% endblock content %}

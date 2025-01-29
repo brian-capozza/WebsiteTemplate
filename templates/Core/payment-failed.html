@@ -1,0 +1,30 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if cart_data.items %}
+
+<main id="order-detail">
+
+    <div class="invoice-header">
+        <h1>Payment Failed</h1>
+        <h4>Please Try Again Later. Sorry for any Inconvenience.</h4>
+        <img id="payment_failed" src="{% static '/images/Homepage/payment_failed.png' %}" alt="" loading="lazy" decoding="async">
+    </div>
+</main>
+
+{% else %}
+
+<html>
+<head>
+    <title>Redirecting to Another page in HTML</title>
+    <!-- Redirecting to another page using meta tag -->
+    <meta http-equiv="refresh"
+          content="0; url ={% url 'core:index' %}" />
+</head>
+</html>
+
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatsSellingCentral</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alata&display=swap">
+    <link rel="icon" href="{% static 'images/logos/beyblade-logo.jpg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+    <script src="{% static '//js/script.js' %}"></script>
+    <script src="https://kit.fontawesome.com/54a0cfe9a6.js" crossorigin="anonymous"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<main>
+    <div class="center-container">
+        <img style="margin-left: auto; margin-right: auto; width: 20%; display: block;" src="{% static 'images/Logos/beyblade-logo.jpg' %}" alt="" loading="lazy" decoding="async">
+        <h1 style="text-align: center;">Thank You for checking us out!</h1>
+        <h4 style="text-align: center;">This Website is Currently Under Construction. Consider checking out some of our other platforms in the meantine!</h4>
+        <div class="social-links">
+            <a href="https://www.ebay.com/"><i class="fab fa-ebay"></i></a>
+            <a href="https://discord.com/"><i class="fab fa-discord"></i></a>
+            <a href="https://www.tiktok.com/"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.mercari.com/">M</a>
+        </div>
+    </div>
+</main>
+
+<style>
+    .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Make the container take up the full height of the viewport */
+    }
+    .social-links {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .social-links a {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        background-color: rgba(61, 59, 59, 0.2);
+        margin: 0 10px 10px 0;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 50%;
+        color: black;
+        transition: all 0.5s ease;
+    }
+
+    .social-links a:hover {
+        color: #ffffff;
+        background-color: black;
+    }
+</style>

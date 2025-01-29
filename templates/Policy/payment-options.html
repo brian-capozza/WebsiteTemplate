@@ -1,0 +1,15 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="help-main">
+    <div class="help-header">
+        <h1>Payment Options</h1>
+    </div>
+    <div class="help-details">
+        {{ payment_options_text.payment_options_text|safe }}
+    </div>
+</main>
+
+{% endblock content %}

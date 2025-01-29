@@ -1,0 +1,39 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<section id="product1" class="section-p1">
+    <h2>All Products</h2>
+    <p>High Quality Beyblade Products</p>
+    <div class="pro-container">
+        <div id="grid">
+            {% for p in products %}
+            <div>
+                <a href="{% url 'Core:product-detail' p.pid %}">
+                    <div class="pro">
+                        <img src="{{ p.image.url }}" alt="" loading="lazy" decoding="async">
+                        <div class="desc">
+                            <span>{{ p.category }}</span>
+                            <h5>{{ p.title }}</h5>
+                            <div class="star">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>${{ p.price }}</h4>
+                        </div>
+                        <a href="/cart/"><i class="fa-solid fa-cart-shopping"></i></a>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

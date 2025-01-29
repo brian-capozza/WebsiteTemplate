@@ -1,0 +1,74 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+<body>
+<div class="small-container single-product">
+    <div class="row">
+        <div class="col-2">
+            <div class="large-img-container" data-scale="2">
+                <img src="{{ p.image.url }}" width="70%" class="large-img" id="ProductImg" target="_self" loading="lazy" decoding="async">
+            </div>
+            <div class="small-img-row">
+                <img src="{{ p.image.url }}" width="14%" class="small-img" loading="lazy" decoding="async">
+                {% for p_image in p_images %}
+                <img src="{{ p_image.images.url }}" width="14%" class="small-img" loading="lazy" decoding="async">
+                {% endfor %}
+            </div>
+        </div>        
+        <div class="product-info">
+            <p>{{p.category}}</p>
+            <h1>{{p.title}}</h1>
+            <span>$</span><span class="current-product-price-{{ p.id }}">{{p.price}}</span>
+            <br>
+            <input class="product-quantity-{{ p.id }}" type="number" max="{{ p.quantity }}" min="1" value="1">
+            <br>
+            <input type="hidden" value="{{ p.id }}" class="product-id-{{ p.id }}">
+            <input type="hidden" value="{{ p.pid }}" class="product-pid-{{ p.id }}">
+            <input type="hidden" value="{{ p.title }}" class="product-title-{{ p.id }}">
+            <input type="hidden" value="{{ p.quantity }}" class="product-max-quantity-{{ p.id }}">
+            <input type="hidden" value="{{ p.image.url }}" class="product-image-{{ p.id }}">
+            <input type="hidden" value="{{ p.product_status }}" class="product-status-{{ p.id }}">
+            {% if p.product_status != 'sold_out' %}
+            <button class="btn" id="add-to-cart-btn" data-index="{{ p.id }}">Add to Cart</button>
+            {% else %}
+            <br>
+            <h4 style="color: red;">Product Out of Stock</h4>
+            <br>
+            {% endif %}
+            <h3>Product Details<i class="fa fa-indent"></i></h3>
+            <br>
+            <p>{{p.description|truncatechars:1000|safe}}</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ProductImg = document.getElementById("ProductImg");
+    var SmallImg = document.getElementsByClassName("small-img");
+
+    SmallImg[0].onclick = function()
+    {
+        ProductImg.src = SmallImg[0].src
+    }
+    SmallImg[1].onclick = function()
+    {
+        ProductImg.src = SmallImg[1].src
+    }
+    SmallImg[2].onclick = function()
+    {
+        ProductImg.src = SmallImg[2].src
+    }
+    SmallImg[3].onclick = function()
+    {
+        ProductImg.src = SmallImg[3].src
+    }
+</script>
+
+</body>
+
+{% endblock content %}

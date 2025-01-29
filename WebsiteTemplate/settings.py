@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3l3ptzs*+j97k6k*$sbu2e2m&%@=n&-)=8wqj_f=4f8(*#y8=-'
+SECRET_KEY = '+Q[fH^v*N4VI`Oz?%O>FalE/ZGO:?HIjbZQhaM.d)5?$"O`>`rg-*n$~A5<.i(g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# security.W016
+#CSRF_COOKIE_SECURE = True
+
+# security.W012
+#SESSION_COOKIE_SECURE = True
+
+# security.W008
+#SECURE_SSL_REDIRECT = True
+
+# security.W004
+#SECURE_HSTS_SECONDS = 31536000 # One year in seconds
+
+# Another security settings
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True
+#SECURE_CONTENT_TYPE_NOSNIFF = True
 
 ALLOWED_HOSTS = []
 
@@ -31,12 +49,32 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Admin
+    'jazzmin',
+
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Custom Apps
+    'Core',
+    'Authentication',
+    'Policy',
+    'Switch',
+
+    # Rich Text
+    'tinymce',
+
+    # MFA
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+
+    # Icons
+    'fontawesomefree',
 ]
 
 MIDDLEWARE = [
@@ -45,6 +83,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -54,7 +93,7 @@ ROOT_URLCONF = 'WebsiteTemplate.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Core.context_processor.default'
             ],
         },
     },
@@ -105,9 +145,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -115,9 +157,65 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# JAZZMIN ADMIN
+
+JAZZMIN_SETTINGS = {
+    'site_header': 'BeybladeWebsite',
+    'site_brand': 'BeybladeWebsite',
+    'site_logo': 'images/logos/beyblade-logo.jpg',
+    'copyright': 'gbw.com'
+}
+
+AUTH_USER_MODEL = 'Authentication.CustomUser'
+
+# STRIPE
+
+STRIPE_PUBLIC_KEY = 'pk_test_51PMY5jFihnXUJ8PvOI2fy9pwxVfBW4xBBay7Dmx2t1yTCI2b972maKT8gC0yBJlXXip4qV6xwtZhIF5FJjTRNg7j00NUFMCBDR'
+STRIPE_SECRET_KEY = 'sk_test_51PMY5jFihnXUJ8PvGERrMrhACid8gTRyLmxGcGaCeYU7cIJsgQOvWyy7FrEDvUp4FpL34oH24v54zcA9ai1WxOYE00PQlaMeo7'
+
+# TinyMCE
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "tinymce/")
+
+TINYMCE_DEFAULT_CONFIG = {
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    'theme': 'silver',
+    'plugins': '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1': '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+    'toolbar2': '''
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+}

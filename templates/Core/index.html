@@ -1,0 +1,122 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load webp %}
+
+<!--
+<div>
+    <video id="myVideo" autoplay muted>
+        <source src="{% static '/images/Homepage/final.mp4' %}" id="mp4Source" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function () {
+            var player = document.getElementById('myVideo');
+            var mp4Vid = document.getElementById('mp4Source');
+            var sourceChanged = false; // Flag to track if the source has been changed
+    
+            player.addEventListener('ended', function () {
+                console.log('Video ended.');
+    
+                // Check if the source has already been changed
+                if (!sourceChanged) {
+                    console.log('Changing source to loop video.');
+    
+                    // Change the video source
+                    mp4Vid.src = "{% static 'images/Homepage/loop.mp4' %}";
+                    player.load();  // Reload the video element to recognize the new source
+                    player.play();  // Play the video again
+    
+                    // Set the flag to true
+                    sourceChanged = true;
+                } else {
+                    player.currentTime = 0;
+                    player.play();
+                }
+            });
+        });
+    </script>
+</div>
+-->
+<section id="hero">
+    <div id=hero-text>
+        <h4>Buy Beyblades Now</h4>
+        <h2>Best Deals Around</h2>
+        <h1>Only For A Limited Time</h1>
+        <p>Selling Lots of Authentic Beyblades at Midfake Prices!</p>
+        <div class="shop-button">
+            <a class="button" href="/shop/">Shop Now</a>
+        </div>
+    </div>
+    <div id="hero-images">
+        <div id="slider">
+            <img src="{% webp 'images/Homepage/twisted-tempo.png' %}" alt="" loading="lazy" decoding="async">
+            <img src="{% webp 'images/Homepage/poison-serpent.png' %}" alt="" loading="lazy" decoding="async">
+            <img src="{% webp 'images/Homepage/prehybrid-leone.png' %}" alt="" loading="lazy" decoding="async">
+            <img src="{% webp 'images/Homepage/ldrago-destructor.png' %}" alt="" loading="lazy" decoding="async">
+            <img src="{% webp 'images/Homepage/burn-phoenix.png' %}" alt="" loading="lazy" decoding="async">
+            <img src="{% webp 'images/Homepage/twisted-tempo.png' %}" alt="" loading="lazy" decoding="async">
+        </div>
+    </div>
+</section>
+
+<section id="feature" class="section-p1">
+    <div class="fe-box">
+        <img src="{% webp 'images/Homepage/fast-delivery.png' %}" alt="" loading="lazy" decoding="async">
+        <h6>Fast Delivery</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% webp 'images/Homepage/diverse-payment.png' %}" alt="" loading="lazy" decoding="async">
+        <h6>Diverse Payment Methods</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% webp 'images/Homepage/friendly-service.png' %}" alt="" loading="lazy" decoding="async">
+        <h6>Friendly Service</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% webp 'images/Homepage/quality-guarantee.png' %}" alt="" loading="lazy" decoding="async">
+        <h6>Quality Guarantee</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% webp 'images/Homepage/low-prices.png' %}" alt="" loading="lazy" decoding="async">
+        <h6>Lowest Prices Around</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% webp 'images/Homepage/service.png' %}" alt="" loading="lazy" decoding="async">
+        <h6>24/7 Hours</h6>
+    </div>
+</section>
+
+<section id="product1" class="section-p1">
+    <h2>Featured Products</h2>
+    <p>High Quality Beyblade Products</p>
+    <div class="pro-container">
+        <div id="grid">
+            {% for p in products %}
+            <div>
+                <a href="{% url 'Core:product-detail' p.pid %}">
+                    <div class="pro">
+                        <img src="{{ p.image.url }}" alt="" loading="lazy" decoding="async">
+                        <div class="desc">
+                            <span>{{ p.category }}</span>
+                            <h5>{{ p.title }}</h5>
+                            <div class="star">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>${{ p.price }}</h4>
+                        </div>
+                        <a href="/cart/"><i class="fa-solid fa-cart-shopping"></i></a>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

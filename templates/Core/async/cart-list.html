@@ -1,0 +1,83 @@
+{% if totalcartitems %}
+
+<main id="cart-list">
+    <div class="cart-header">
+        <h1>Your Cart</h1>
+    </div>
+    <div class="cart-page">
+        <input type="hidden" value="{{ STRIPE_PUBLIC_KEY }}" class="STRIPE_PUBLIC_KEY">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Remove</th>
+                <th>Refresh</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for pid, item in cart_data.items %}
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        <a href="{% url 'Core:product-detail' item.pid %}"><img src="{{ item.image }}" alt="" loading="lazy" decoding="async"></a>
+                        <div>
+                            <p><a href="{% url 'Core:product-detail' item.pid %}">{{ item.title }}</a></p>
+                            <small>${{ item.price }}</small>
+                            {% if item.product_status == 'sold_out' %}
+                            <br>
+                            <small style="color: red;">Product Out of Stock</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+                <td><button class="delete-product" data-product="{{ pid }}"><i class="fa-solid fa-trash"></i></button></td>
+                <td><button class="refresh-product" data-product="{{ pid }}"><i class="fa-solid fa-arrows-rotate"></i></button></td>
+                <td><input class="product-qty-{{ pid }}" type="number" value="{{ item.qty }}" min="1" max="{{ item.max_qty }}"></td>
+                <td>${{ item.total_price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="total-price">
+            <table class="checkout-table">
+                <tr>
+                    <td>Subtotal</td>
+                    <td>${{ cart_subtotal_amount }}</td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td>Calculated at Checkout</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>${{ cart_subtotal_amount }}</td>
+                </tr>
+                <tr>
+                    {% if sold_out == 'false' %}
+                    <td>
+                        <form action="/create-checkout-session/" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" id="checkout-btn">Proceed To Checkout</button>
+                        </form>
+                    </td>
+                    {% else %}
+                    <td style="color: red; text-align: center;">Remove Sold Out Items From Cart To Proceed</td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</main>
+
+{% else %}
+
+<html>
+<head>
+    <title>Redirecting to Another page in HTML</title>
+    <!-- Redirecting to another page using meta tag -->
+    <meta http-equiv="refresh"
+          content="0; url ={% url 'Core:index' %}" />
+</head>
+</html>
+
+{% endif %}
