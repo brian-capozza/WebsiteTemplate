@@ -1,6 +1,10 @@
 from django.contrib import admin
-from Core.models import Product, Category, Vendor, Wishlist, ProductImages, ProductReview, ShippingAddress, BillingAddress
+from Core.models import Product, Category, Vendor, Wishlist, ProductImages, ProductReview, ShippingAddress, BillingAddress, Generation
 from Core.models import Order, OrderItems
+
+from WebsiteTemplate.admin import admin_site
+
+from WebsiteTemplate.settings import TOTP_ADMIN
 
 # Register your models here.
 
@@ -49,3 +53,21 @@ class ProductReviewAdmin(admin.ModelAdmin):
 
 class WishlistAdmin(admin.ModelAdmin):
     list_display = ['user', 'product', 'date']
+
+
+if TOTP_ADMIN:
+    admin_site.register(Product, ProductAdmin)
+    admin_site.register(Category, CategoryAdmin)
+    admin_site.register(Generation, GenerationAdmin)
+    admin_site.register(Vendor, VendorAdmin)
+    admin_site.register(Order, OrderAdmin)
+    admin_site.register(ProductReview, ProductReviewAdmin)
+    admin_site.register(Wishlist, WishlistAdmin)
+else:
+    admin.site.register(Product, ProductAdmin)
+    admin.site.register(Category, CategoryAdmin)
+    admin.site.register(Generation, GenerationAdmin)
+    admin.site.register(Vendor, VendorAdmin)
+    admin.site.register(Order, OrderAdmin)
+    admin.site.register(ProductReview, ProductReviewAdmin)
+    admin.site.register(Wishlist, WishlistAdmin)

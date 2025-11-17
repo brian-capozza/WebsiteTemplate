@@ -20,77 +20,24 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-# TOTP Import/Setup
-from django_otp.admin import OTPAdminSite
-from django_otp.plugins.otp_totp.models import TOTPDevice
-from django_otp.plugins.otp_totp.admin import TOTPDeviceAdmin
+from .admin import admin_site  # Custom admin site
+from WebsiteTemplate.settings import TOTP_ADMIN
 
-# Authentication App 
-from Authentication.models import CustomUser
-from Authentication.admin import CustomUserAdmin
 
-# Core App
-from Core.models import Product, Category, Generation, Vendor, Order, ProductReview, Wishlist
-from Core.admin import ProductAdmin, CategoryAdmin, GenerationAdmin, VendorAdmin, OrderAdmin, ProductReviewAdmin, WishlistAdmin
+urlpatterns = []
 
-# Policy App
-from Policy.models import AboutUs, OurServices, PrivacyPolicy, TermsOfService, FAQ, ShippingPolicy, ReturnPolicy, PaymentOptions
-from Policy.admin import AboutUsAdmin, OurServicesAdmin, PrivacyPolicyAdmin, TermsOfServiceAdmin, FAQAdmin, ShippingPolicyAdmin, ReturnPolicyAdmin, PaymentOptionsAdmin
+# Custom admin interface
+if TOTP_ADMIN:
+    urlpatterns += [
+        path('apollo/', admin_site.urls),
+    ]
+else:
+    urlpatterns += [
+        path('admin/', admin.site.urls),
+    ]
 
-# Switch App
-from Switch.models import ProductionSwitch
-from Switch.admin import ProductionSwitchAdmin
 
-class OTPAdmin(OTPAdminSite):
-    pass
-    
-admin_site = OTPAdmin(name='OTPAdmin')
-
-#admin_site.register(TOTPDevice, TOTPDeviceAdmin)
-
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Product, ProductAdmin)
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Generation, GenerationAdmin)
-admin.site.register(Vendor, VendorAdmin)
-admin.site.register(Order, OrderAdmin)
-admin.site.register(ProductReview, ProductReviewAdmin)
-admin.site.register(Wishlist, WishlistAdmin)
-
-admin.site.register(AboutUs, AboutUsAdmin)
-admin.site.register(OurServices, OurServicesAdmin)
-admin.site.register(PrivacyPolicy, PrivacyPolicyAdmin)
-admin.site.register(TermsOfService, TermsOfServiceAdmin)
-admin.site.register(FAQ, FAQAdmin)
-admin.site.register(ShippingPolicy, ShippingPolicyAdmin)
-admin.site.register(ReturnPolicy, ReturnPolicyAdmin)
-admin.site.register(PaymentOptions, PaymentOptionsAdmin)
-
-admin.site.register(ProductionSwitch, ProductionSwitchAdmin)
-
-#admin_site.register(CustomUser, CustomUserAdmin)
-#admin_site.register(Product, ProductAdmin)
-#admin_site.register(Category, CategoryAdmin)
-#admin_site.register(Generation, GenerationAdmin)
-#admin_site.register(Vendor, VendorAdmin)
-#admin_site.register(Order, OrderAdmin)
-#admin_site.register(ProductReview, ProductReviewAdmin)
-#admin_site.register(Wishlist, WishlistAdmin)
-
-#admin_site.register(AboutUs, AboutUsAdmin)
-#admin_site.register(OurServices, OurServicesAdmin)
-#admin_site.register(PrivacyPolicy, PrivacyPolicyAdmin)
-#admin_site.register(TermsOfService, TermsOfServiceAdmin)
-#admin_site.register(FAQ, FAQAdmin)
-#admin_site.register(ShippingPolicy, ShippingPolicyAdmin)
-#admin_site.register(ReturnPolicy, ReturnPolicyAdmin)
-#admin_site.register(PaymentOptions, PaymentOptionsAdmin)
-
-#admin_site.register(ProductionSwitch, ProductionSwitchAdmin)
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    #path('apollo/', admin_site.urls),
+urlpatterns += [
     path('', include('Core.urls')),
     path('user/', include('Authentication.urls')),
     path('policy/', include('Policy.urls')),
