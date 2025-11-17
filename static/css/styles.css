@@ -13,7 +13,7 @@
 /* || Font formats */
 
 h1 {
-    font-size: 40px;
+    font-size: 33px;
     line-height: 64px;
     color: #222;
 }
@@ -279,7 +279,13 @@ p {
 
 /* || Media Query to Handle Mobile Device Navigation Bar Based on Screen Width */
 
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
+    h1 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 950px) {
     h1 {
         font-size: 20px;
         line-height: 16px;
@@ -751,7 +757,11 @@ video {
 }
 
 .product-info {
-    margin-right: 15%;
+    margin-right: 10%;
+}
+
+.product-info p {
+    font-size: 12px;
 }
 
 input:focus {

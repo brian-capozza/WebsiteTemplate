@@ -26,7 +26,7 @@ SECRET_KEY = '+Q[fH^v*N4VI`Oz?%O>FalE/ZGO:?HIjbZQhaM.d)5?$"O`>`rg-*n$~A5<.i(g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TOTP_ADMIN = True
+TOTP_ADMIN = False
 
 # security.W016
 #CSRF_COOKIE_SECURE = True

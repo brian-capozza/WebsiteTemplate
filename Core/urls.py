@@ -37,8 +37,8 @@ urlpatterns = [
     path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
     path('webhooks/stripe/', stripe_webhook, name='stripe_webhook'),
 
-    path('payment-completed/', payment_completed_view, name='payment-completed'),
-    path('payment-failed/', payment_failed_view, name='payment-failed'),
+    #path('payment-completed/', payment_completed_view, name='payment-completed'),
+    #path('payment-failed/', payment_failed_view, name='payment-failed'),
 
     # Orders
     path('orders/', order_list_view, name='order-list'),
